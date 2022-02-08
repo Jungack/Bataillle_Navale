@@ -10,14 +10,34 @@ public class Board /*implements IBoard*/ {
 	public Board(String nom, int taille) {
 		DEFAULT_SIZE = taille;
 		m_nom = nom;
-		m_navires = new Character[DEFAULT_SIZE * DEFAULT_SIZE];
-		m_frappes = new boolean[DEFAULT_SIZE * DEFAULT_SIZE];
+		m_navires = new Character[DEFAULT_SIZE][DEFAULT_SIZE];
+		for (int i = 0; i < DEFAULT_SIZE; ++i) {
+			for (int j = 0; j < DEFAULT_SIZE; j++) {
+				m_navires[i][j] = '.';
+			}
+		}
+		m_frappes = new boolean[DEFAULT_SIZE][DEFAULT_SIZE];
+		for (int i = 0; i < DEFAULT_SIZE; ++i) {
+			for (int j = 0; j < DEFAULT_SIZE; j++) {
+				m_frappes[i][j] = false;
+			}
+		}
 	}
 
 	public Board(String nom) {
 		m_nom = nom;
-		m_navires = new Character[DEFAULT_SIZE * DEFAULT_SIZE];
-		m_frappes = new boolean[DEFAULT_SIZE * DEFAULT_SIZE];
+		m_navires = new Character[DEFAULT_SIZE][DEFAULT_SIZE];
+		for (int i = 0; i < DEFAULT_SIZE; ++i) {
+			for (int j = 0; j < DEFAULT_SIZE; j++) {
+				m_navires[i][j] = '.';
+			}
+		}
+		m_frappes = new boolean[DEFAULT_SIZE][DEFAULT_SIZE];
+		for (int i = 0; i < DEFAULT_SIZE; ++i) {
+			for (int j = 0; j < DEFAULT_SIZE; j++) {
+				m_frappes[i][j] = false;
+			}
+		}
 	}
 
 	public void print() {
@@ -45,7 +65,7 @@ public class Board /*implements IBoard*/ {
 		System.out.print(newLine);
 		
 		for (int i = 0; i < DEFAULT_SIZE; i++) {
-			for (int j = 0; j < 2; ++j) {
+			for (int j = 0; j < 2; j++) {
 				System.out.print(i + 1);
 				if (i < 9) {
 					for (int k = 1; k < taille_colonne_num_ligne; k++) {
@@ -56,15 +76,24 @@ public class Board /*implements IBoard*/ {
 						System.out.print(" ");
 					}
 				}
-
-				for (int k = 0; k < DEFAULT_SIZE; ++k) {
-					System.out.print(".");
+				if (j == 0) {
+					for (int k = 0; k < DEFAULT_SIZE; ++k) {
+						System.out.print(m_navires[i][k]);
+					}
+				
+					for (int k = 0; k < espacement_grilles; ++k) {
+						System.out.print(" ");
+					}
+				} else {
+					for (int k = 0; k < DEFAULT_SIZE; ++k) {
+						if (m_frappes[i][k]) {
+							System.out.print("X");
+						} else {
+							System.out.print(".");
+						}
+					} 
 				}
-
-				for (int k = 0; k < espacement_grilles; ++k) {
-					System.out.print(" ");
-				}
-			}
+			}		
 			System.out.print(newLine);
 		}
 	}
@@ -108,6 +137,6 @@ public class Board /*implements IBoard*/ {
 	}
 */
 	protected String m_nom;
-	protected Character m_navires[];
-	protected boolean m_frappes[];
+	protected Character m_navires[][];
+	protected boolean m_frappes[][];
 }
