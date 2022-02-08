@@ -136,7 +136,7 @@ public class Board /*implements IBoard*/ {
 		return true;
 	}
 */
-	protected String m_nom;
-	protected Character m_navires[][];
-	protected boolean m_frappes[][];
+	private String m_nom;
+	private Character m_navires[][];
+	private boolean m_frappes[][];
 }
