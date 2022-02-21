@@ -1,6 +1,7 @@
 package ensta.ai;
 
 import java.io.Serializable;
+import java.util.Random;
 
 import ensta.model.Coords;
 import ensta.model.Hit;
@@ -60,16 +61,20 @@ public class BattleShipsAI implements Serializable {
 	 * @param ships the ships to put
 	 */
 	public void putShips(AbstractShip ships[]) {
-		Coords coords;
+		Coords coords = new Coords();
 		Orientation orientation;
 		Orientation[] orientations = Orientation.values();
+		int size = this.board.getSize();
 
-		/*for (AbstractShip ship : ships) {
+		for (AbstractShip ship : ships) {
 			do {
 				// TODO use Random to pick a random x, y & orientation
+				coords = Coords.randomCoords(size);
+				Random r = new Random();
+				ship.setOrientation(orientations[r.nextInt(4)]);
 			} while (!board.canPutShip(ship, coords));
 			board.putShip(ship, coords);
-		}*/
+		}
 	}
 
 	/**

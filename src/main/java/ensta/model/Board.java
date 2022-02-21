@@ -108,11 +108,11 @@ public class Board implements IBoard {
 	public boolean putShip(AbstractShip ship, Coords coords) {
 		Orientation o = ship.getOrientation();
 		int taille_bateau = ship.getLength();
-		ShipState tempShipState = new ShipState(ship);
 
 		if (!canPutShip(ship, coords)) return false;
 
 		for (int i = 0; i < taille_bateau; ++i) {
+			ShipState tempShipState = new ShipState(ship);
 			if (o == Orientation.NORTH || o == Orientation.SOUTH) {
 				m_navires[coords.getX()][coords.getY() + o.getIncrement() * i] = tempShipState;
 			} else {
@@ -180,9 +180,15 @@ public class Board implements IBoard {
 		}
 	}
 
-	public Hit sendHit(Coords res) { return null; }
-	public Boolean getHit(Coords coords) { return null;}
-	public void setHit(boolean hit, Coords coords) {}
+	public Hit sendHit(Coords res) { return sendHit(res.getX(), res.getY()); }
+
+	public Boolean getHit(Coords coords) {
+		return m_frappes[coords.getX()][coords.getY()];
+	}
+
+	public void setHit(boolean hit, Coords coords) {
+		m_frappes[coords.getX()][coords.getY()] = hit;
+	}
 
 	private String m_nom;
 	private ShipState m_navires[][];

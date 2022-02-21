@@ -1,4 +1,5 @@
 package ensta.model;
+import java.util.Random;
 
 public class Coords {
     private int x;
@@ -24,6 +25,15 @@ public class Coords {
         this.y = coords.getY();
     }
 
-    public Boolean isInBoard(int size) { return null; }
-    public static Coords randomCoords(int size) { return null; }
+    public Boolean isInBoard(int size) {
+        return (this.x >= 0 && this.y >= 0 && this.x < size && this.y < size);
+    }
+
+    public static Coords randomCoords(int size) {
+        Coords coords = new Coords();
+        Random r = new Random();
+		coords.setX(r.nextInt(size));
+		coords.setY(r.nextInt(size));
+        return coords;
+    }
 }
