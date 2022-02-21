@@ -46,8 +46,25 @@ public class Player {
 			// TODO set ship orientation
 			// TODO put ship at given position
 			// TODO when ship placement successful
-			++i;
-			done = i == 5;
+
+			Orientation tempOrientation = Orientation.randomOrientation();
+			if (res.orientation.toLowerCase().equals("north")) {
+				tempOrientation = Orientation.NORTH;
+			} else if (res.orientation.toLowerCase().equals("south")) {
+				tempOrientation = Orientation.SOUTH;
+			} else if (res.orientation.toLowerCase().equals("east")) {
+				tempOrientation = Orientation.EAST;
+			} else {
+				tempOrientation = Orientation.WEST;
+			}
+			ship.setOrientation(tempOrientation);
+			Coords tempCoords = new Coords(res.x, res.y - 1);
+			if (board.putShip(ship, tempCoords)) {
+				++i;
+				done = i == 5;
+			} else {
+				System.out.println("Impossible de placer le bateau à la position souhaitée ! Réessayez !");
+			}
 
 			board.print();
 		} while (!done);

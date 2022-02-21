@@ -79,7 +79,7 @@ public class Board implements IBoard {
 				}
 				if (j == 0) {
 					for (int k = 0; k < size; ++k) {
-						System.out.print(m_navires[i][k]);
+						System.out.print(m_navires[k][i]);
 					}
 				
 					for (int k = 0; k < espacement_grilles; ++k) {
@@ -87,7 +87,7 @@ public class Board implements IBoard {
 					}
 				} else {
 					for (int k = 0; k < size; ++k) {
-						if (m_frappes[i][k]) {
+						if (m_frappes[k][i]) {
 							System.out.print("X");
 						} else {
 							System.out.print(".");
@@ -108,9 +108,9 @@ public class Board implements IBoard {
 
 		for (int i = 0; i < taille_bateau; ++i) {
 			if (o == Orientation.NORTH || o == Orientation.SOUTH) {
-				m_navires[coords.getX() + o.getIncrement() * i][coords.getY()] = label;
-			} else {
 				m_navires[coords.getX()][coords.getY() + o.getIncrement() * i] = label;
+			} else {
+				m_navires[coords.getX() + o.getIncrement() * i][coords.getY()] = label;
 			}
 		}
 		return true;
