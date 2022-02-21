@@ -1,7 +1,10 @@
 package ensta.model;
 
 import ensta.model.ship.AbstractShip;
+import ensta.model.ship.NoShip;
 import ensta.util.Orientation;
+import ensta.model.ship.ShipState;
+import ensta.util.ColorUtil;
 
 public class Board implements IBoard {
 
@@ -9,16 +12,16 @@ public class Board implements IBoard {
 	
 	public Board(String nom, int taille) {
 		m_nom = nom;
-		m_navires = new Character[taille][taille];
+		m_navires = new ShipState[taille][taille];
+		m_frappes = new Boolean[taille][taille];
 		for (int i = 0; i < taille; ++i) {
 			for (int j = 0; j < taille; j++) {
-				m_navires[i][j] = '.';
+				m_navires[i][j] = new ShipState();
 			}
 		}
-		m_frappes = new boolean[taille][taille];
 		for (int i = 0; i < taille; ++i) {
 			for (int j = 0; j < taille; j++) {
-				m_frappes[i][j] = false;
+				m_frappes[i][j] = null;
 			}
 		}
 		size = taille;
@@ -26,16 +29,16 @@ public class Board implements IBoard {
 
 	public Board(String nom) {
 		m_nom = nom;
-		m_navires = new Character[DEFAULT_SIZE][DEFAULT_SIZE];
+		m_navires = new ShipState[DEFAULT_SIZE][DEFAULT_SIZE];
+		m_frappes = new Boolean[DEFAULT_SIZE][DEFAULT_SIZE];
 		for (int i = 0; i < DEFAULT_SIZE; ++i) {
 			for (int j = 0; j < DEFAULT_SIZE; j++) {
-				m_navires[i][j] = '.';
+				m_navires[i][j] = new ShipState();
 			}
 		}
-		m_frappes = new boolean[DEFAULT_SIZE][DEFAULT_SIZE];
 		for (int i = 0; i < DEFAULT_SIZE; ++i) {
 			for (int j = 0; j < DEFAULT_SIZE; j++) {
-				m_frappes[i][j] = false;
+				m_frappes[i][j] = null;
 			}
 		}
 		size = DEFAULT_SIZE;
@@ -79,7 +82,7 @@ public class Board implements IBoard {
 				}
 				if (j == 0) {
 					for (int k = 0; k < size; ++k) {
-						System.out.print(m_navires[k][i]);
+						System.out.print(m_navires[k][i].getLabel());
 					}
 				
 					for (int k = 0; k < espacement_grilles; ++k) {
@@ -87,10 +90,12 @@ public class Board implements IBoard {
 					}
 				} else {
 					for (int k = 0; k < size; ++k) {
-						if (m_frappes[k][i]) {
+						if (m_frappes[k][i] == null) {
+							System.out.print(".");
+						} else if (m_frappes[k][i] == false) {
 							System.out.print("X");
 						} else {
-							System.out.print(".");
+							System.out.print(ColorUtil.colorize("X", ColorUtil.Color.RED));
 						}
 					} 
 				}
@@ -102,15 +107,15 @@ public class Board implements IBoard {
 	public boolean putShip(AbstractShip ship, Coords coords) {
 		Orientation o = ship.getOrientation();
 		int taille_bateau = ship.getLength();
-		Character label = ship.getLabel();
+		ShipState tempShipState = new ShipState(ship);
 
 		if (!canPutShip(ship, coords)) return false;
 
 		for (int i = 0; i < taille_bateau; ++i) {
 			if (o == Orientation.NORTH || o == Orientation.SOUTH) {
-				m_navires[coords.getX()][coords.getY() + o.getIncrement() * i] = label;
+				m_navires[coords.getX()][coords.getY() + o.getIncrement() * i] = tempShipState;
 			} else {
-				m_navires[coords.getX() + o.getIncrement() * i][coords.getY()] = label;
+				m_navires[coords.getX() + o.getIncrement() * i][coords.getY()] = tempShipState;
 			}
 		}
 		return true;
@@ -118,7 +123,7 @@ public class Board implements IBoard {
 
 	public int getSize() { return size; }
 
-	public boolean hasShip(Coords coords) { return (m_navires[coords.getX()][coords.getY()] != '.'); }
+	public boolean hasShip(Coords coords) { return !(m_navires[coords.getX()][coords.getY()].getLabel().equals(".")); }
 
 	public boolean canPutShip(AbstractShip ship, Coords coords) {
 		Orientation o = ship.getOrientation();
@@ -163,7 +168,7 @@ public class Board implements IBoard {
 	public void setHit(boolean hit, Coords coords) {}
 
 	private String m_nom;
-	private Character m_navires[][];
-	private boolean m_frappes[][];
+	private ShipState m_navires[][];
+	private Boolean m_frappes[][];
 	private int size;
 }
