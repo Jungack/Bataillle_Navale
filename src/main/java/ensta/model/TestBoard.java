@@ -20,6 +20,10 @@ public class TestBoard {
         List<AbstractShip> ships = Arrays.asList(destroyer, submarine1, submarine2, battleship, carrier);
         Player player = new Player(board, opponentBoard, ships);
         player.putShips();
+        Coords coords = new Coords(0,0);
+        board.sendHit(1,3);
+        board.sendHit(2,3);
+        board.sendHit(3,7);
         board.print();
     }
 }

@@ -46,27 +46,29 @@ public class Player {
 			// TODO set ship orientation
 			// TODO put ship at given position
 			// TODO when ship placement successful
-
-			Orientation tempOrientation = Orientation.randomOrientation();
-			if (res.orientation.toLowerCase().equals("north")) {
-				tempOrientation = Orientation.NORTH;
-			} else if (res.orientation.toLowerCase().equals("south")) {
-				tempOrientation = Orientation.SOUTH;
-			} else if (res.orientation.toLowerCase().equals("east")) {
-				tempOrientation = Orientation.EAST;
-			} else {
-				tempOrientation = Orientation.WEST;
-			}
-			ship.setOrientation(tempOrientation);
-			Coords tempCoords = new Coords(res.x, res.y - 1);
-			if (board.putShip(ship, tempCoords)) {
-				++i;
-				done = i == 5;
+			if (res.x >= 0 && res.y >= 1 && res.x < this.board.getSize() && res.y <= this.board.getSize()) {
+				Orientation tempOrientation = Orientation.randomOrientation();
+				if (res.orientation.toLowerCase().equals("north")) {
+					tempOrientation = Orientation.NORTH;
+				} else if (res.orientation.toLowerCase().equals("south")) {
+					tempOrientation = Orientation.SOUTH;
+				} else if (res.orientation.toLowerCase().equals("east")) {
+					tempOrientation = Orientation.EAST;
+				} else {
+					tempOrientation = Orientation.WEST;
+				}
+				ship.setOrientation(tempOrientation);
+				Coords tempCoords = new Coords(res.x, res.y - 1);
+				if (board.putShip(ship, tempCoords)) {
+					++i;
+					done = i == 5;
+				} else {
+					System.out.println("Impossible de placer le bateau à la position souhaitée ! Réessayez !");
+				}
+				board.print();
 			} else {
 				System.out.println("Impossible de placer le bateau à la position souhaitée ! Réessayez !");
 			}
-
-			board.print();
 		} while (!done);
 	}
 
@@ -81,6 +83,11 @@ public class Player {
 
 			// TODO : Game expects sendHit to return BOTH hit result & hit coords.
 			// return hit is obvious. But how to return coords at the same time ?
+			if (hitInput.x >= 0 && hitInput.y >= 0 && hitInput.x < this.opponentBoard.getSize() && hitInput.y < this.opponentBoard.getSize()) {
+				hit = this.opponentBoard.sendHit(hitInput.x, hitInput.y);
+				done = true;
+			}
+			
 		} while (!done);
 
 		return hit;

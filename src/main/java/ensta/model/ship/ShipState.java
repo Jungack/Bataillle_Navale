@@ -15,7 +15,10 @@ public class ShipState {
         this.ship = ship;
     }
 
-    public void addStrike() { struck = true; }
+    public void addStrike() {
+        struck = true;
+        this.ship.addStrike();
+    }
     public boolean isStruck() { return struck; }
 
     public String getLabel() { 

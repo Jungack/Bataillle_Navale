@@ -5,6 +5,7 @@ import ensta.model.ship.NoShip;
 import ensta.util.Orientation;
 import ensta.model.ship.ShipState;
 import ensta.util.ColorUtil;
+import ensta.model.Hit;
 
 public class Board implements IBoard {
 
@@ -161,6 +162,22 @@ public class Board implements IBoard {
 		}
 
 		return true;
+	}
+
+
+	public Hit sendHit(int x, int y) {
+		Coords coords = new Coords(x,y);
+		if (!hasShip(coords)) {
+			return Hit.MISS;
+		} else {
+			m_navires[x][y].addStrike();
+			if (m_navires[x][y].isSunk()) {
+				System.out.println(m_navires[x][y].getLabel() + " coulé.");
+				return Hit.fromInt(m_navires[x][y].getShip().getLength());
+			} else {
+				return Hit.STRIKE;
+			}
+		}
 	}
 
 	public Hit sendHit(Coords res) { return null; }
