@@ -1,11 +1,13 @@
-package ensta.model;
-import ensta.model.AbstractShip;
+package ensta.model.ship;
+import ensta.model.ship.AbstractShip;
+import ensta.util.Orientation;
 
-public class Battleship extends AbstractShip {
-    public Battleship(Orientation orientation) {
-        this.label = 'B';
-        this.nom = "BattleShip";
-        this.taille = 4;
-        this.orientation = orientation;
+public class BattleShip extends AbstractShip {
+    public BattleShip() {}
+    public BattleShip(Orientation orientation) {
+        setLabel('B');
+        setName("BattleShip");
+        setLength(4);
+        setOrientation(orientation);
     }
 }

@@ -64,12 +64,12 @@ public class BattleShipsAI implements Serializable {
 		Orientation orientation;
 		Orientation[] orientations = Orientation.values();
 
-		for (AbstractShip ship : ships) {
+		/*for (AbstractShip ship : ships) {
 			do {
 				// TODO use Random to pick a random x, y & orientation
 			} while (!board.canPutShip(ship, coords));
 			board.putShip(ship, coords);
-		}
+		}*/
 	}
 
 	/**

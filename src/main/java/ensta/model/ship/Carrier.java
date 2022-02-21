@@ -1,11 +1,13 @@
-package ensta.model;
-import ensta.model.AbstractShip;
+package ensta.model.ship;
+import ensta.model.ship.AbstractShip;
+import ensta.util.Orientation;
 
 public class Carrier extends AbstractShip {
+    public Carrier() {}
     public Carrier(Orientation orientation) {
-        this.label = 'C';
-        this.nom = "Aircraft-Carrier";
-        this.taille = 5;
-        this.orientation = orientation;
+        setLabel('C');
+        setName("Aircraft-Carrier");
+        setLength(5);
+        setOrientation(orientation);
     }
 }

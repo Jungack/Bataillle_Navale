@@ -1,7 +1,8 @@
-package ensta.model;
+package ensta.model.ship;
 import ensta.util.Orientation;
 
-public class AbstractShip {
+public abstract class AbstractShip {
+    public AbstractShip() {}
     public AbstractShip(Character label, String nom, int taille, Orientation orientation) {
         this.label = label;
         this.nom = nom;
@@ -9,12 +10,17 @@ public class AbstractShip {
         this.orientation = orientation;
     }
 
-    public Character get_label() { return label };
-    public String get_nom() { return nom };
-    public int get_taille() { return taille };
-    public Orientation get_orientation() { return orientation };
+    public Character getLabel() { return label; }
+    public String getName() { return nom; }
+    public int getLength() { return taille; }
+    public Orientation getOrientation() { return orientation; }
 
-    public void change_orientation(Orientation o) { orientation = o };
+    public void setLabel(Character label) { this.label = label; }
+    public void setName(String nom) { this.nom = nom; }
+    public void setLength(int taille) { this.taille = taille; }
+    public void setOrientation(Orientation orientation) { this.orientation = orientation; }
+
+    public boolean isSunk() { return true; }
     
     private Character label;
     private String nom;

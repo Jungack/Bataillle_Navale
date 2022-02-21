@@ -1,11 +1,13 @@
-package ensta.model;
-import ensta.model.AbstractShip;
+package ensta.model.ship;
+import ensta.model.ship.AbstractShip;
+import ensta.util.Orientation;
 
 public class Destroyer extends AbstractShip {
+    public Destroyer() {}
     public Destroyer(Orientation orientation) {
-        this.label = 'D';
-        this.nom = "Destroyer";
-        this.taille = 2;
-        this.orientation = orientation;
+        setLabel('D');
+        setName("Destroyer");
+        setLength(2);
+        setOrientation(orientation);
     }
 }
