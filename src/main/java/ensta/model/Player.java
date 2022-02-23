@@ -84,6 +84,8 @@ public class Player {
 			// TODO : Game expects sendHit to return BOTH hit result & hit coords.
 			// return hit is obvious. But how to return coords at the same time ?
 			if (hitInput.x >= 0 && hitInput.y >= 0 && hitInput.x < this.opponentBoard.getSize() && hitInput.y < this.opponentBoard.getSize()) {
+				coords.setX(hitInput.x);
+				coords.setY(hitInput.y);
 				hit = this.opponentBoard.sendHit(hitInput.x, hitInput.y);
 				done = true;
 			}

@@ -16,6 +16,8 @@ import ensta.model.ship.Carrier;
 import ensta.model.ship.Destroyer;
 import ensta.model.ship.Submarine;
 import ensta.util.ColorUtil;
+import ensta.ai.BattleShipsAI;
+import ensta.ai.PlayerAI;
 
 public class Game {
 
@@ -42,10 +44,33 @@ public class Game {
 
 
 			// TODO init boards
+			Scanner scanner = new Scanner(System.in);
+			boolean done = false;
+			int size = 0;
+			System.out.println("Entrez la taille du plateau :");
+			do {
+				try {
+					String[] in = scanner.nextLine().toLowerCase().split(" ");
+					size = Integer.parseInt(in[0]);
+					done = true;
+				} catch (Exception e) {
+					System.out.println("Mauvais format. Réessayez svp.");
+					done = false;
+				}
+			} while (!done);	
+			Board board1 = new Board("Board 1", size);
+			Board board2 = new Board("Board 2", size);
 
 			// TODO init this.player1 & this.player2
+			List<AbstractShip> ships1 = createDefaultShips();
+			List<AbstractShip> ships2 = createDefaultShips();
+			this.player1 = new Player(board1, board2, ships1);
+			this.player2 = new PlayerAI(board2, board1, ships2);
 
 			// TODO place player ships
+			player1.putShips();
+			player2.putShips();
+
 		}
 		return this;
 	}
@@ -63,7 +88,9 @@ public class Game {
 		boolean done;
 		do {
 			hit = Hit.MISS; // TODO player1 send a hit
+			hit = player1.sendHit(coords);
 			boolean strike = hit != Hit.MISS; // TODO set this hit on his board (b1)
+			player1.getBoard().setHit(strike, coords);
 
 			done = updateScore();
 			b1.print();
@@ -74,6 +101,7 @@ public class Game {
 			if (!done && !strike) {
 				do {
 					hit = Hit.MISS; // TODO player2 send a hit.
+					hit = player2.sendHit(coords);
 
 					strike = hit != Hit.MISS;
 					if (strike) {
